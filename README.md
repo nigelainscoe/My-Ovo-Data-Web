@@ -98,3 +98,9 @@ My-Ovo-Data-Web/
 ├── requirements.txt
 └── run.sh
 ```
+
+## License
+
+Licensed under the Apache License 2.0 — see [LICENSE](LICENSE).
+
+This project is a Python/web port of [MikeWilliams-UK/My-Ovo-Data](https://github.com/MikeWilliams-UK/My-Ovo-Data) (also Apache 2.0). Not affiliated with or endorsed by OVO Energy.
