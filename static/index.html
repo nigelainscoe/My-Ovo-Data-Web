@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My OVO Data</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <h1>My OVO Data <span class="tag">web</span></h1>
+    <p class="disclaimer">Unofficial. Not affiliated with OVO Energy. Use at your own risk.</p>
+  </header>
+
+  <main>
+    <!-- Login -->
+    <section id="login-card" class="card">
+      <h2>Log in</h2>
+      <form id="login-form">
+        <label>Username / email
+          <input type="text" id="username" autocomplete="username" required>
+        </label>
+        <label>Password
+          <input type="password" id="password" autocomplete="current-password" required>
+        </label>
+        <button type="submit" id="login-btn">Log in</button>
+      </form>
+      <p id="login-error" class="error"></p>
+    </section>
+
+    <!-- Account + actions -->
+    <section id="account-card" class="card hidden">
+      <h2>Account</h2>
+      <label>Select account
+        <select id="account-select"></select>
+      </label>
+      <div id="account-meta" class="meta"></div>
+
+      <div class="controls">
+        <label>Fetch back to
+          <select id="stop-when"></select>
+        </label>
+        <div class="buttons">
+          <button id="fetch-usage-btn">Get Usage</button>
+          <button id="fetch-readings-btn">Get Readings</button>
+          <button id="cancel-btn" class="secondary" disabled>Cancel</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Progress -->
+    <section id="progress-card" class="card hidden">
+      <h2>Progress</h2>
+      <p id="status-line" class="status">idle</p>
+      <pre id="log"></pre>
+    </section>
+
+    <!-- Summary -->
+    <section id="summary-card" class="card hidden">
+      <h2>Stored data summary
+        <button id="refresh-summary-btn" class="secondary small">Refresh</button>
+      </h2>
+      <table id="summary-table">
+        <thead>
+          <tr><th>Fuel</th><th>Data set</th><th>From</th><th>To</th><th>Records</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <p id="summary-empty" class="muted hidden">No data stored yet. Run a fetch above.</p>
+    </section>
+
+    <!-- Export -->
+    <section id="export-card" class="card hidden">
+      <h2>Export</h2>
+      <p class="muted">Download everything stored for this account.</p>
+      <div class="buttons">
+        <button id="export-excel-btn">Download Excel (.xlsx)</button>
+        <button id="export-csv-btn" class="secondary">Download CSV (.zip)</button>
+      </div>
+      <p id="export-msg" class="muted"></p>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

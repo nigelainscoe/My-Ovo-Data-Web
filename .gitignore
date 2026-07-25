@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# IDE
+.idea/
+
+# App data — NEVER commit; contains personal energy usage
+data/
+
+# Local exports
+*.xlsx
+*.zip
+
+# OS
+.DS_Store
