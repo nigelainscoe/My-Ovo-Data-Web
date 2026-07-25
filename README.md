@@ -5,7 +5,7 @@ originally a Windows WPF/C# desktop application. It logs into the OVO Energy API
 pulls your smart-meter **usage** (monthly, daily, half-hourly) and **meter
 readings** into a per-account SQLite database, and shows a summary of what's stored.
 
-A big shout-out to @MikeWilliams-UK for the original work that enabled me to quickly port this.
+A big shout-out to [@MikeWilliams-UK](https://github.com/MikeWilliams-UK) for the original work that enabled me to quickly port this.
 
 > **Unofficial.** Not affiliated with OVO Energy. Use at your own risk. This runs
 > entirely on your own machine — credentials are held in memory only and never
