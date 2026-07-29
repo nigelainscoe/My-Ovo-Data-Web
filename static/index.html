@@ -3,83 +3,123 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0e1117">
   <title>My OVO Data</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48">
+  <style>
+    /* Paint the slate canvas immediately so there's no white flash before CSS loads. */
+    html, body { background: #0e1117; }
+  </style>
+  <!-- The two faces used above the fold; the rest load on demand from fonts.css. -->
+  <link rel="preload" href="/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/fonts.css">
+  <link rel="stylesheet" href="/tokens.css">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <header>
-    <h1>My OVO Data <span class="tag">web</span></h1>
-    <p class="disclaimer">Unofficial. Not affiliated with OVO Energy. Use at your own risk.</p>
-  </header>
+  <div class="page">
+    <header class="panel header">
+      <div class="header-brand">
+        <span class="header-brand-mark" aria-hidden="true">⚡</span>
+        <div class="header-brand-text">
+          <span class="header-brand-name">My OVO Data</span>
+          <span class="header-brand-tag">web edition</span>
+        </div>
+      </div>
+      <p class="disclaimer">Unofficial. Not affiliated with OVO Energy. Use at your own risk.</p>
+    </header>
 
-  <main>
-    <!-- Login -->
-    <section id="login-card" class="card">
-      <h2>Log in</h2>
-      <form id="login-form">
-        <label>Username / email
-          <input type="text" id="username" autocomplete="username" required>
-        </label>
-        <label>Password
-          <input type="password" id="password" autocomplete="current-password" required>
-        </label>
-        <button type="submit" id="login-btn">Log in</button>
-      </form>
-      <p id="login-error" class="error"></p>
+    <section class="panel headline">
+      <div class="headline-eyebrow">
+        <span class="live-dot"></span>
+        Runs locally
+      </div>
+      <h1>Your meter data, <em>on your machine</em></h1>
+      <p>
+        Pull smart-meter usage and readings straight from the OVO API into a local
+        SQLite database, then <strong>export</strong> the lot as Excel or CSV.
+        Credentials stay in memory and are never written to disk.
+      </p>
     </section>
 
-    <!-- Account + actions -->
-    <section id="account-card" class="card hidden">
-      <h2>Account</h2>
-      <label>Select account
-        <select id="account-select"></select>
-      </label>
-      <div id="account-meta" class="meta"></div>
+    <main class="page-main">
+      <!-- Login -->
+      <section id="login-card" class="panel card">
+        <div class="card-head"><h2>Log in</h2></div>
+        <form id="login-form" class="card">
+          <label class="field">
+            <span>Username / email</span>
+            <input type="text" id="username" autocomplete="username" required>
+          </label>
+          <label class="field">
+            <span>Password</span>
+            <input type="password" id="password" autocomplete="current-password" required>
+          </label>
+          <div class="buttons">
+            <button type="submit" id="login-btn" class="btn btn-primary">Log in</button>
+          </div>
+        </form>
+        <p id="login-error" class="error"></p>
+      </section>
 
-      <div class="controls">
-        <label>Fetch back to
+      <!-- Account + actions -->
+      <section id="account-card" class="panel card hidden">
+        <div class="card-head"><h2>Account</h2></div>
+        <label class="field">
+          <span>Select account</span>
+          <select id="account-select"></select>
+        </label>
+        <div id="account-meta" class="meta"></div>
+
+        <label class="field">
+          <span>Fetch back to</span>
           <select id="stop-when"></select>
         </label>
         <div class="buttons">
-          <button id="fetch-usage-btn">Get Usage</button>
-          <button id="fetch-readings-btn">Get Readings</button>
-          <button id="cancel-btn" class="secondary" disabled>Cancel</button>
+          <button id="fetch-usage-btn" class="btn btn-primary">Get Usage</button>
+          <button id="fetch-readings-btn" class="btn btn-primary">Get Readings</button>
+          <button id="cancel-btn" class="btn btn-secondary" disabled>Cancel</button>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Progress -->
-    <section id="progress-card" class="card hidden">
-      <h2>Progress</h2>
-      <p id="status-line" class="status">idle</p>
-      <pre id="log"></pre>
-    </section>
+      <!-- Progress -->
+      <section id="progress-card" class="panel card hidden">
+        <div class="card-head"><h2>Progress</h2></div>
+        <p id="status-line" class="status">idle</p>
+        <pre id="log"></pre>
+      </section>
 
-    <!-- Summary -->
-    <section id="summary-card" class="card hidden">
-      <h2>Stored data summary
-        <button id="refresh-summary-btn" class="secondary small">Refresh</button>
-      </h2>
-      <table id="summary-table">
-        <thead>
-          <tr><th>Fuel</th><th>Data set</th><th>From</th><th>To</th><th>Records</th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-      <p id="summary-empty" class="muted hidden">No data stored yet. Run a fetch above.</p>
-    </section>
+      <!-- Summary -->
+      <section id="summary-card" class="panel card hidden">
+        <div class="card-head">
+          <h2>Stored data summary</h2>
+          <button id="refresh-summary-btn" class="btn btn-secondary small">Refresh</button>
+        </div>
+        <div class="table-wrap">
+          <table id="summary-table">
+            <thead>
+              <tr><th>Fuel</th><th>Data set</th><th>From</th><th>To</th><th>Records</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p id="summary-empty" class="muted hidden">No data stored yet. Run a fetch above.</p>
+      </section>
 
-    <!-- Export -->
-    <section id="export-card" class="card hidden">
-      <h2>Export</h2>
-      <p class="muted">Download everything stored for this account.</p>
-      <div class="buttons">
-        <button id="export-excel-btn">Download Excel (.xlsx)</button>
-        <button id="export-csv-btn" class="secondary">Download CSV (.zip)</button>
-      </div>
-      <p id="export-msg" class="muted"></p>
-    </section>
-  </main>
+      <!-- Export -->
+      <section id="export-card" class="panel card hidden">
+        <div class="card-head"><h2>Export</h2></div>
+        <p class="muted">Download everything stored for this account.</p>
+        <div class="buttons">
+          <button id="export-excel-btn" class="btn btn-primary">Download Excel (.xlsx)</button>
+          <button id="export-csv-btn" class="btn btn-secondary">Download CSV (.zip)</button>
+        </div>
+        <p id="export-msg" class="muted"></p>
+      </section>
+    </main>
+  </div>
 
   <script src="/app.js"></script>
 </body>

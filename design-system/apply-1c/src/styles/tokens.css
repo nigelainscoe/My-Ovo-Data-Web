@@ -1,0 +1,77 @@
+/* Billing Finance — "Voltage on Slate" (Direction 1C) design tokens.
+   Cosmetic re-skin of the monitoring dashboard: a control-room, high-contrast
+   dark theme. Electric-lime accent on deep slate, neon status signals.
+   Drop-in replacement for the "Warm Teal & Cream" (1B) palette. */
+
+:root {
+  color-scheme: dark;
+
+  /* Slate scale — near-black to raised surfaces */
+  --slate-950: #0b0e13;   /* deepest */
+  --slate-900: #0e1117;   /* app canvas */
+  --slate-850: #12161d;
+  --slate-800: #161b22;   /* panel */
+  --slate-750: #1d242e;   /* raised / hover surface */
+  --slate-700: #232a35;   /* hairline */
+  --slate-600: #2b3442;   /* strong border */
+  --slate-500: #3a4453;
+
+  /* Voltage lime — the single brand accent */
+  --lime-300: #d7f97a;
+  --lime-400: #c4f24c;    /* brand primary */
+  --lime-500: #aee132;
+  --lime-600: #93c022;    /* deep / hover */
+
+  /* Inks (cool light greys on dark) */
+  --ink-050: #f4f5f7;     /* heading */
+  --ink-200: #c2c8d2;     /* body */
+  --ink-400: #7e8694;     /* mute */
+
+  /* Semantic ramps — neon signals */
+  --success-500: #4ade80;
+  --success-tint: rgba(74, 222, 128, 0.14);
+  --success-glow: rgba(74, 222, 128, 0.10);
+  --warning-500: #facc15;
+  --warning-tint: rgba(250, 204, 21, 0.14);
+  --warning-glow: rgba(250, 204, 21, 0.12);
+  --danger-500: #fb7185;
+  --danger-tint: rgba(251, 113, 133, 0.16);
+  --danger-glow: rgba(251, 113, 133, 0.16);
+
+  /* Semantic tokens — what components actually consume */
+  --bg: var(--slate-900);
+  --panel: var(--slate-800);
+  --panel-2: var(--slate-750);
+  --line: var(--slate-700);
+  --line-strong: var(--slate-600);
+  --ink: var(--ink-050);
+  --ink-2: var(--ink-200);
+  --mute: var(--ink-400);
+  --brand: var(--lime-400);
+  --brand-deep: var(--lime-600);
+  --brand-ink: var(--slate-900);      /* text/glyphs sitting ON the lime brand */
+  --brand-tint: rgba(196, 242, 76, 0.12);
+  --brand-glow: rgba(196, 242, 76, 0.30);
+  --ok: var(--success-500);
+  --warn: var(--warning-500);
+  --bad: var(--danger-500);
+  --accent: var(--lime-400);
+  --accent-deep: var(--lime-600);
+
+  --r-2: 4px;
+  --r-3: 8px;
+  --r-4: 10px;
+  --r-5: 14px;
+  --r-6: 16px;
+  --r-pill: 999px;
+
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+  --s-5: 20px; --s-6: 24px; --s-8: 32px; --s-10: 40px;
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 10px 30px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.4);
+
+  --font-sans: 'Space Grotesk', 'Inter', -apple-system, system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', 'Iowan Old Style', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+}

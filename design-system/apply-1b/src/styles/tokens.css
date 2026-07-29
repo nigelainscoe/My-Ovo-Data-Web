@@ -1,0 +1,77 @@
+/* Billing Finance — "Warm Teal & Cream" (Direction C) design tokens.
+   Cosmetic re-skin of the monitoring dashboard.
+   Replaces the previous "Confident Indigo" (Direction A) palette. */
+
+:root {
+  /* Teal brand scale */
+  --teal-50:  #e6f2f0;
+  --teal-100: #c8e2dd;
+  --teal-200: #93c7bd;
+  --teal-300: #5aa89a;
+  --teal-400: #2b8b7b;
+  --teal-500: #128375;
+  --teal-600: #0f7a6c;   /* brand primary */
+  --teal-700: #0c665a;
+  --teal-800: #0a4f47;   /* brand deep */
+  --teal-900: #073b35;
+
+  /* Warm cream / sand neutrals */
+  --sand-50:  #fbf8f1;   /* panel */
+  --sand-100: #f5f1e8;   /* app canvas */
+  --sand-200: #efe7d6;   /* hover surface */
+  --sand-300: #e5dccb;   /* hairline */
+  --sand-400: #d8ccb4;   /* strong border */
+  --sand-500: #9c9482;   /* placeholder */
+
+  /* Teal-tinted inks */
+  --ink-900: #11302e;    /* heading / ink */
+  --ink-700: #355552;    /* body */
+  --ink-500: #6e837f;    /* mute */
+
+  /* Accent — warm terracotta (used sparingly) */
+  --accent:      #e26a3a;
+  --accent-deep: #c95a2e;
+
+  /* Semantic ramps */
+  --success-50: #e4efe2;
+  --success-500: #2f7d4a;
+  --success-700: #245f39;
+  --warning-50: #f6ecd6;
+  --warning-500: #c98212;
+  --warning-700: #9c6410;
+  --danger-50: #f2ded7;
+  --danger-500: #b3402a;
+  --danger-700: #8a2f1e;
+
+  /* Semantic tokens — what components actually consume */
+  --bg: var(--sand-100);
+  --panel: var(--sand-50);
+  --panel-2: var(--sand-200);
+  --line: var(--sand-300);
+  --line-strong: var(--sand-400);
+  --ink: var(--ink-900);
+  --ink-2: var(--ink-700);
+  --mute: var(--ink-500);
+  --brand: var(--teal-600);
+  --brand-deep: var(--teal-800);
+  --brand-tint: var(--teal-50);
+  --ok: var(--success-500);
+  --warn: var(--warning-500);
+  --bad: var(--danger-500);
+
+  --r-2: 4px;
+  --r-3: 8px;
+  --r-4: 10px;
+  --r-5: 14px;
+  --r-pill: 999px;
+
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+  --s-5: 20px; --s-6: 24px; --s-8: 32px; --s-10: 40px;
+
+  --shadow-1: 0 1px 2px rgba(17,48,46,0.05);
+  --shadow-2: 0 4px 16px rgba(17,48,46,0.07), 0 1px 2px rgba(17,48,46,0.05);
+
+  --font-sans: 'Inter', -apple-system, system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', 'Iowan Old Style', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+}

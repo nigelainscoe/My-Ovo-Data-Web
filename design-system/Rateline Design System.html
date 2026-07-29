@@ -1,0 +1,990 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rateline — Design System v0.1</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+  /* ──────────────────────────────────────────────────────────────
+     RATELINE — DESIGN TOKENS
+     Direction: Confident Indigo
+     ────────────────────────────────────────────────────────────── */
+  :root {
+    /* Indigo brand scale */
+    --indigo-50:  #eef0ff;
+    --indigo-100: #dde1ff;
+    --indigo-200: #b9c0ff;
+    --indigo-300: #8b95ff;
+    --indigo-400: #5a67ff;
+    --indigo-500: #3a48ff;
+    --indigo-600: #2a3aff;  /* brand primary */
+    --indigo-700: #1d27cc;
+    --indigo-800: #161d7a;
+    --indigo-900: #0c1052;
+
+    /* Warm slate neutrals */
+    --slate-50:  #fbfaf8;   /* app canvas */
+    --slate-100: #f4f2ec;   /* hover surface */
+    --slate-200: #e7e6e1;   /* hairline */
+    --slate-300: #c9c8c2;   /* disabled border */
+    --slate-400: #9a988f;   /* placeholder */
+    --slate-500: #6b7388;   /* mute */
+    --slate-600: #4d5468;   /* body 2 */
+    --slate-700: #3a3f55;   /* body */
+    --slate-800: #1e2238;   /* heading */
+    --slate-900: #0b1020;   /* ink */
+
+    /* Accent */
+    --highlight: #ffd84d;
+
+    /* Semantic */
+    --success-50: #e6f6ee;
+    --success-500: #119e6f;
+    --success-700: #0b6f4e;
+    --warning-50: #fdf2e4;
+    --warning-500: #d97706;
+    --warning-700: #92500a;
+    --danger-50: #fbe9e6;
+    --danger-500: #d6321f;
+    --danger-700: #8f1f10;
+    --info-50: var(--indigo-50);
+    --info-500: var(--indigo-600);
+    --info-700: var(--indigo-800);
+
+    /* Semantic tokens — what components actually consume */
+    --bg: var(--slate-50);
+    --panel: #ffffff;
+    --panel-2: var(--slate-100);
+    --line: var(--slate-200);
+    --line-strong: var(--slate-300);
+    --ink: var(--slate-900);
+    --ink-2: var(--slate-700);
+    --mute: var(--slate-500);
+    --brand: var(--indigo-600);
+    --brand-deep: var(--indigo-800);
+    --brand-tint: var(--indigo-50);
+    --ok: var(--success-500);
+    --warn: var(--warning-500);
+    --bad: var(--danger-500);
+
+    /* Radii */
+    --r-2: 4px;
+    --r-3: 8px;
+    --r-4: 10px;
+    --r-5: 14px;
+    --r-pill: 999px;
+
+    /* Spacing scale (use these directly) */
+    --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+    --s-5: 20px; --s-6: 24px; --s-8: 32px; --s-10: 40px;
+    --s-12: 48px; --s-16: 64px;
+
+    /* Shadows */
+    --shadow-1: 0 1px 2px rgba(11,16,32,0.04);
+    --shadow-2: 0 4px 16px rgba(11,16,32,0.06), 0 1px 2px rgba(11,16,32,0.04);
+    --shadow-3: 0 24px 64px rgba(11,16,32,0.12), 0 2px 8px rgba(11,16,32,0.06);
+
+    /* Type families */
+    --font-sans: 'Geist', -apple-system, system-ui, sans-serif;
+    --font-serif: 'Instrument Serif', 'Iowan Old Style', serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     BASE
+     ────────────────────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 14px; line-height: 1.55;
+    font-feature-settings: 'cv11', 'ss01', 'tnum';
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, p { margin: 0; }
+  table { border-collapse: collapse; }
+  hr { border: 0; height: 1px; background: var(--line); margin: 0; }
+
+  /* Layout */
+  .page { max-width: 1320px; margin: 0 auto; padding: 64px 56px 96px; }
+  .section { margin-top: 72px; }
+  .section + .section { margin-top: 88px; }
+  .section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 28px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+  .section-num { font-family: var(--font-mono); font-size: 13px; color: var(--mute); padding-top: 4px; }
+  .section-title { font-family: var(--font-sans); font-weight: 700; font-size: 28px; letter-spacing: -0.025em; }
+  .section-sub { color: var(--ink-2); margin-left: auto; font-size: 13.5px; max-width: 360px; text-align: right; }
+
+  .grid { display: grid; gap: 16px; }
+  .grid-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .grid-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .grid-4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+  .grid-6 { grid-template-columns: repeat(6, minmax(0,1fr)); }
+  .grid-10 { grid-template-columns: repeat(10, minmax(0,1fr)); }
+
+  .row { display: flex; }
+  .col { display: flex; flex-direction: column; }
+  .gap-1 { gap: 4px; } .gap-2 { gap: 8px; } .gap-3 { gap: 12px; } .gap-4 { gap: 16px; } .gap-5 { gap: 20px; } .gap-6 { gap: 24px; } .gap-8 { gap: 32px; }
+  .mono { font-family: var(--font-mono); }
+  .serif { font-family: var(--font-serif); font-style: italic; }
+  .mute { color: var(--mute); }
+  .tnum { font-variant-numeric: tabular-nums; }
+
+  /* Subsection labels */
+  .label {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em;
+    font-weight: 600; color: var(--mute);
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     HERO
+     ────────────────────────────────────────────────────────────── */
+  .hero {
+    display: grid; grid-template-columns: 1fr 380px; gap: 48px;
+    padding: 56px; border: 1px solid var(--line); border-radius: var(--r-5);
+    background: var(--panel);
+    align-items: center;
+  }
+  .hero-mark { display: flex; align-items: center; gap: 16px; }
+  .hero-mark svg { width: 64px; height: 64px; }
+  .hero-mark .name { font-weight: 800; font-size: 28px; letter-spacing: -0.03em; }
+  .hero h1 {
+    font-size: 64px; line-height: 1.02; letter-spacing: -0.035em; font-weight: 700;
+    margin-top: 24px;
+  }
+  .hero h1 em { font-family: var(--font-serif); font-weight: 400; color: var(--brand); }
+  .hero p { color: var(--ink-2); font-size: 16px; max-width: 540px; margin-top: 20px; }
+  .hero-meta { display: flex; flex-direction: column; gap: 18px; padding: 24px; background: var(--brand-tint); border-radius: var(--r-5); }
+  .hero-meta .row-meta { display: flex; justify-content: space-between; font-size: 13px; }
+  .hero-meta .row-meta .k { color: var(--ink-2); }
+  .hero-meta .row-meta .v { font-family: var(--font-mono); color: var(--brand-deep); }
+
+  /* ──────────────────────────────────────────────────────────────
+     COLORS
+     ────────────────────────────────────────────────────────────── */
+  .scale-row { display: grid; grid-template-columns: 130px repeat(10, minmax(0,1fr)); gap: 8px; align-items: stretch; }
+  .scale-row + .scale-row { margin-top: 12px; }
+  .scale-name { display: flex; flex-direction: column; gap: 2px; justify-content: center; padding-right: 8px; }
+  .scale-name strong { font-weight: 600; font-size: 14px; }
+  .scale-name span { font-size: 12px; color: var(--mute); }
+  .swatch {
+    aspect-ratio: 1.2/1; border-radius: var(--r-3);
+    padding: 10px; display: flex; flex-direction: column; justify-content: space-between;
+    position: relative; overflow: hidden;
+    border: 1px solid rgba(11,16,32,0.05);
+  }
+  .swatch .step { font-size: 11px; font-weight: 600; opacity: 0.85; }
+  .swatch .hex { font-family: var(--font-mono); font-size: 10.5px; }
+  .swatch.is-light .step, .swatch.is-light .hex { color: #fff; }
+  .swatch.is-dark .step, .swatch.is-dark .hex { color: var(--ink); }
+  .swatch.is-brand-marker::after {
+    content: ''; position: absolute; top: 6px; right: 6px;
+    width: 6px; height: 6px; border-radius: 50%; background: var(--highlight);
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.15);
+  }
+
+  .semantic-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .semantic-card { border: 1px solid var(--line); border-radius: var(--r-4); padding: 16px; background: var(--panel); }
+  .semantic-card .sw-stack { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 12px 0; }
+  .semantic-card .sw-stack > div { aspect-ratio: 1.3/1; border-radius: var(--r-2); display: flex; align-items: flex-end; padding: 8px; font: 10px/1 var(--font-mono); }
+  .semantic-card h4 { font-size: 14px; font-weight: 600; }
+  .semantic-card .desc { font-size: 12.5px; color: var(--ink-2); }
+
+  /* ──────────────────────────────────────────────────────────────
+     TYPOGRAPHY
+     ────────────────────────────────────────────────────────────── */
+  .type-row { display: grid; grid-template-columns: 200px 1fr 160px; gap: 24px; padding: 18px 0; align-items: baseline; border-top: 1px solid var(--line); }
+  .type-row:first-child { border-top: 0; }
+  .type-row .t-name { font-family: var(--font-mono); font-size: 12px; color: var(--mute); }
+  .type-row .t-name strong { font-family: var(--font-sans); color: var(--ink); font-size: 13.5px; display: block; margin-bottom: 2px; font-weight: 600; }
+  .type-row .t-sample { color: var(--ink); }
+  .type-row .t-spec { font-family: var(--font-mono); font-size: 11.5px; color: var(--mute); text-align: right; line-height: 1.6; }
+  .t-display-xl { font-size: 80px; line-height: 1; letter-spacing: -0.04em; font-weight: 700; }
+  .t-display-l  { font-size: 56px; line-height: 1.02; letter-spacing: -0.035em; font-weight: 700; }
+  .t-display-m  { font-size: 44px; line-height: 1.06; letter-spacing: -0.03em; font-weight: 700; }
+  .t-h1         { font-size: 32px; line-height: 1.15; letter-spacing: -0.025em; font-weight: 700; }
+  .t-h2         { font-size: 24px; line-height: 1.2; letter-spacing: -0.02em; font-weight: 700; }
+  .t-h3         { font-size: 18px; line-height: 1.3; letter-spacing: -0.015em; font-weight: 600; }
+  .t-body-l     { font-size: 16px; line-height: 1.55; }
+  .t-body-m     { font-size: 14px; line-height: 1.55; }
+  .t-body-s     { font-size: 13px; line-height: 1.5; color: var(--ink-2); }
+  .t-label      { font-size: 11px; line-height: 1.4; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; color: var(--mute); }
+  .t-mono       { font-family: var(--font-mono); font-size: 13px; line-height: 1.5; }
+  .t-serif      { font-family: var(--font-serif); font-style: italic; font-size: 44px; line-height: 1.06; color: var(--brand); }
+
+  /* ──────────────────────────────────────────────────────────────
+     COMPONENTS — buttons, forms, pills
+     ────────────────────────────────────────────────────────────── */
+  .specimen {
+    border: 1px solid var(--line); border-radius: var(--r-5);
+    background: var(--panel); padding: 24px;
+  }
+  .specimen-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .specimen-head h3 { font-size: 16px; font-weight: 600; }
+  .specimen-head .label { font-size: 10.5px; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 16px; border-radius: var(--r-4);
+    font: 600 13.5px/1 var(--font-sans);
+    border: 1px solid transparent; cursor: pointer;
+    transition: background 0.12s, box-shadow 0.12s, transform 0.06s;
+  }
+  .btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+  .btn-primary { background: var(--brand); color: #fff; }
+  .btn-primary:hover { background: var(--indigo-700); }
+  .btn-primary:active { background: var(--indigo-800); }
+  .btn-secondary { background: var(--panel); color: var(--ink); border-color: var(--line-strong); }
+  .btn-secondary:hover { background: var(--panel-2); }
+  .btn-ghost { background: transparent; color: var(--ink-2); }
+  .btn-ghost:hover { background: var(--panel-2); color: var(--ink); }
+  .btn-danger { background: var(--bad); color: #fff; }
+  .btn-danger:hover { background: var(--danger-700); }
+  .btn-link { background: transparent; color: var(--brand); padding: 6px 0; }
+  .btn-link:hover { text-decoration: underline; }
+  .btn[disabled] { opacity: 0.45; cursor: not-allowed; }
+  .btn-sm { padding: 6px 10px; font-size: 12.5px; border-radius: var(--r-3); }
+  .btn-lg { padding: 14px 22px; font-size: 15px; border-radius: var(--r-5); }
+  .btn-icon { width: 16px; height: 16px; stroke-width: 2; stroke: currentColor; fill: none; }
+
+  /* Form controls */
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field-label { font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
+  .field-hint { font-size: 12px; color: var(--mute); }
+  .field-err { font-size: 12px; color: var(--bad); }
+  .tf {
+    width: 100%; padding: 11px 13px;
+    border-radius: var(--r-4); border: 1px solid var(--line-strong);
+    background: var(--panel); color: var(--ink);
+    font: 14px/1.4 var(--font-sans);
+    transition: border-color 0.12s, box-shadow 0.12s;
+  }
+  .tf::placeholder { color: var(--slate-400); }
+  .tf:focus { outline: 0; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(42,58,255,0.14); }
+  .tf.is-error { border-color: var(--bad); }
+  .tf.is-error:focus { box-shadow: 0 0 0 3px rgba(214,50,31,0.14); }
+  .tf[disabled] { background: var(--panel-2); color: var(--mute); cursor: not-allowed; }
+
+  .tf-group { display: flex; align-items: stretch; border-radius: var(--r-4); border: 1px solid var(--line-strong); overflow: hidden; background: var(--panel); }
+  .tf-group:focus-within { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(42,58,255,0.14); }
+  .tf-group .tf { border: 0; border-radius: 0; }
+  .tf-group .tf:focus { box-shadow: none; }
+  .tf-group .adornment { padding: 0 12px; display: flex; align-items: center; color: var(--mute); font-family: var(--font-mono); font-size: 13px; background: var(--panel-2); border-right: 1px solid var(--line); }
+  .tf-group .adornment.right { border-right: 0; border-left: 1px solid var(--line); }
+
+  .checkbox, .radio { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; cursor: pointer; }
+  .checkbox input, .radio input { appearance: none; width: 16px; height: 16px; border: 1.5px solid var(--line-strong); background: var(--panel); cursor: pointer; transition: 0.12s; }
+  .checkbox input { border-radius: 4px; }
+  .radio input { border-radius: 999px; }
+  .checkbox input:checked, .radio input:checked { background: var(--brand); border-color: var(--brand); }
+  .checkbox input:checked::after { content: ''; display: block; width: 4px; height: 8px; border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg) translate(1px, -1px); margin: 0 auto; }
+  .radio input:checked::after { content: ''; display: block; width: 6px; height: 6px; border-radius: 999px; background: #fff; margin: 3px auto; }
+
+  .toggle { position: relative; width: 36px; height: 20px; background: var(--line-strong); border-radius: 999px; cursor: pointer; transition: background 0.12s; }
+  .toggle.on { background: var(--brand); }
+  .toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; background: #fff; border-radius: 999px; transition: transform 0.16s; box-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+  .toggle.on::after { transform: translateX(16px); }
+
+  /* Pills + badges */
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px; border-radius: var(--r-pill);
+    font-size: 11.5px; font-weight: 600;
+    border: 1px solid var(--line);
+    background: var(--panel);
+  }
+  .pill .dot { width: 7px; height: 7px; border-radius: 999px; background: currentColor; }
+  .pill-ok    { color: var(--ok);    background: var(--success-50); border-color: transparent; }
+  .pill-warn  { color: var(--warn);  background: var(--warning-50); border-color: transparent; }
+  .pill-bad   { color: var(--bad);   background: var(--danger-50);  border-color: transparent; }
+  .pill-info  { color: var(--brand); background: var(--indigo-50);  border-color: transparent; }
+  .pill-mute  { color: var(--ink-2); background: var(--panel-2);    border-color: transparent; }
+
+  /* ──────────────────────────────────────────────────────────────
+     DATA DISPLAY
+     ────────────────────────────────────────────────────────────── */
+  .stat-card { border: 1px solid var(--line); border-radius: var(--r-5); padding: 20px; background: var(--panel); display: flex; flex-direction: column; gap: 8px; }
+  .stat-card .k { font-size: 12.5px; font-weight: 600; color: var(--mute); }
+  .stat-card .v { font-weight: 700; font-size: 36px; letter-spacing: -0.025em; line-height: 1; }
+  .stat-card .v .unit { font-size: 18px; color: var(--mute); font-weight: 500; margin-left: 4px; }
+  .stat-card .delta { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--mute); }
+  .stat-card.is-feature { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .stat-card.is-feature .k { color: rgba(255,255,255,0.55); }
+  .stat-card.is-feature .v { color: var(--highlight); }
+  .stat-card.is-feature .delta { color: rgba(255,255,255,0.65); }
+
+  table.dt { width: 100%; font-size: 13.5px; }
+  table.dt th, table.dt td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+  table.dt thead th { color: var(--mute); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; background: var(--panel-2); border-bottom: 1px solid var(--line); }
+  table.dt thead th:first-child { border-top-left-radius: var(--r-3); }
+  table.dt thead th:last-child  { border-top-right-radius: var(--r-3); }
+  table.dt td.num { font-variant-numeric: tabular-nums; text-align: right; }
+  table.dt tbody tr:hover { background: var(--brand-tint); }
+  table.dt tbody tr:last-child td { border-bottom: 0; }
+
+  .chart-card { border: 1px solid var(--line); border-radius: var(--r-5); background: var(--panel); padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+  .chart-card-head { display: flex; justify-content: space-between; align-items: baseline; }
+  .chart-card-head h4 { font-size: 14px; font-weight: 600; }
+
+  /* ──────────────────────────────────────────────────────────────
+     SAMPLE DASHBOARD
+     ────────────────────────────────────────────────────────────── */
+  .app {
+    border: 1px solid var(--line); border-radius: var(--r-5); overflow: hidden;
+    background: var(--bg);
+    display: grid; grid-template-columns: 220px 1fr; min-height: 720px;
+  }
+  .app-side { background: var(--ink); color: rgba(255,255,255,0.9); padding: 20px 16px; display: flex; flex-direction: column; gap: 4px; }
+  .app-side .brand-row { display: flex; align-items: center; gap: 10px; padding: 4px 8px 18px; }
+  .app-side .brand-row svg { width: 28px; height: 28px; }
+  .app-side .brand-row .name { font-weight: 700; font-size: 16px; letter-spacing: -0.02em; color: #fff; }
+  .app-side .nav-section { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(255,255,255,0.4); padding: 16px 10px 6px; font-weight: 600; }
+  .app-side a.nav { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: var(--r-3); color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13.5px; font-weight: 500; }
+  .app-side a.nav:hover { background: rgba(255,255,255,0.05); color: #fff; }
+  .app-side a.nav.active { background: var(--brand); color: #fff; }
+  .app-side a.nav .ico { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+  .app-side .user { margin-top: auto; display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: var(--r-3); background: rgba(255,255,255,0.04); }
+  .app-side .user .ava { width: 28px; height: 28px; border-radius: 999px; background: var(--highlight); color: var(--ink); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; }
+  .app-side .user .name { font-size: 13px; color: #fff; }
+  .app-side .user .role { font-size: 11px; color: rgba(255,255,255,0.5); }
+
+  .app-main { padding: 24px 28px; display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+  .app-topbar { display: flex; align-items: center; gap: 12px; }
+  .app-topbar h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+  .app-topbar h2 em { font-family: var(--font-serif); font-weight: 400; color: var(--brand); }
+  .app-topbar .topbar-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+
+  .placeholder {
+    background-image: repeating-linear-gradient(135deg, rgba(11,16,32,0.04) 0 6px, transparent 6px 12px);
+    background-color: var(--panel-2);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--mute); font: 11px/1 var(--font-mono);
+    border-radius: var(--r-3);
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ─────────────── HERO ─────────────── -->
+  <header class="hero">
+    <div>
+      <div class="hero-mark">
+        <svg viewBox="0 0 120 120" aria-hidden>
+          <rect x="0" y="0" width="120" height="120" rx="26" fill="var(--brand)" />
+          <path d="M28 86 V34 H56 C72 34 80 42 80 54 C80 62 75 68 67 70 L86 86 H72 L54 70 H40 V86 Z M40 60 H56 C64 60 68 57 68 52 C68 47 64 44 56 44 H40 Z" fill="#fff" />
+        </svg>
+        <div>
+          <div class="name">Rateline</div>
+          <div class="serif mute" style="font-size:14px">finance, on the line.</div>
+        </div>
+      </div>
+      <h1>Clarity, <em>compounded.</em></h1>
+      <p>A design system for finance-ops dashboards. Confident, plain-spoken, never gimmicky. Built so brokers, underwriters, and ops teams find the shortest line between the question and the number.</p>
+    </div>
+    <aside class="hero-meta">
+      <div class="row-meta"><span class="k">Version</span><span class="v">v0.1 · 2026.05</span></div>
+      <div class="row-meta"><span class="k">Direction</span><span class="v">Confident Indigo</span></div>
+      <div class="row-meta"><span class="k">Primary type</span><span class="v">Geist</span></div>
+      <div class="row-meta"><span class="k">Accent type</span><span class="v">Instrument Serif</span></div>
+      <div class="row-meta"><span class="k">Mono</span><span class="v">JetBrains Mono</span></div>
+      <div class="row-meta"><span class="k">Base unit</span><span class="v">4px</span></div>
+    </aside>
+  </header>
+
+  <!-- ─────────────── COLORS ─────────────── -->
+  <section class="section">
+    <header class="section-head">
+      <div class="section-num">01</div>
+      <h2 class="section-title">Color</h2>
+      <p class="section-sub">A single indigo scale carries the brand; warm slate handles surfaces and text. Three semantic ramps for state. Yellow is the one accent — used sparingly to spotlight the thing that matters.</p>
+    </header>
+
+    <div class="label" style="margin-bottom:12px">Brand · Indigo</div>
+    <div class="scale-row">
+      <div class="scale-name"><strong>Indigo</strong><span>--indigo-50…900</span></div>
+      <div class="swatch is-dark"  style="background:var(--indigo-50)"><span class="step">50</span><span class="hex">#EEF0FF</span></div>
+      <div class="swatch is-dark"  style="background:var(--indigo-100)"><span class="step">100</span><span class="hex">#DDE1FF</span></div>
+      <div class="swatch is-dark"  style="background:var(--indigo-200)"><span class="step">200</span><span class="hex">#B9C0FF</span></div>
+      <div class="swatch is-dark"  style="background:var(--indigo-300)"><span class="step">300</span><span class="hex">#8B95FF</span></div>
+      <div class="swatch is-light" style="background:var(--indigo-400)"><span class="step">400</span><span class="hex">#5A67FF</span></div>
+      <div class="swatch is-light" style="background:var(--indigo-500)"><span class="step">500</span><span class="hex">#3A48FF</span></div>
+      <div class="swatch is-light is-brand-marker" style="background:var(--indigo-600)"><span class="step">600 · brand</span><span class="hex">#2A3AFF</span></div>
+      <div class="swatch is-light" style="background:var(--indigo-700)"><span class="step">700</span><span class="hex">#1D27CC</span></div>
+      <div class="swatch is-light" style="background:var(--indigo-800)"><span class="step">800</span><span class="hex">#161D7A</span></div>
+      <div class="swatch is-light" style="background:var(--indigo-900)"><span class="step">900</span><span class="hex">#0C1052</span></div>
+    </div>
+
+    <div class="label" style="margin:32px 0 12px">Neutrals · Warm Slate</div>
+    <div class="scale-row">
+      <div class="scale-name"><strong>Slate</strong><span>--slate-50…900</span></div>
+      <div class="swatch is-dark"  style="background:var(--slate-50)"><span class="step">50</span><span class="hex">#FBFAF8</span></div>
+      <div class="swatch is-dark"  style="background:var(--slate-100)"><span class="step">100</span><span class="hex">#F4F2EC</span></div>
+      <div class="swatch is-dark"  style="background:var(--slate-200)"><span class="step">200</span><span class="hex">#E7E6E1</span></div>
+      <div class="swatch is-dark"  style="background:var(--slate-300)"><span class="step">300</span><span class="hex">#C9C8C2</span></div>
+      <div class="swatch is-dark"  style="background:var(--slate-400)"><span class="step">400</span><span class="hex">#9A988F</span></div>
+      <div class="swatch is-light" style="background:var(--slate-500)"><span class="step">500</span><span class="hex">#6B7388</span></div>
+      <div class="swatch is-light" style="background:var(--slate-600)"><span class="step">600</span><span class="hex">#4D5468</span></div>
+      <div class="swatch is-light" style="background:var(--slate-700)"><span class="step">700</span><span class="hex">#3A3F55</span></div>
+      <div class="swatch is-light" style="background:var(--slate-800)"><span class="step">800</span><span class="hex">#1E2238</span></div>
+      <div class="swatch is-light" style="background:var(--slate-900)"><span class="step">900 · ink</span><span class="hex">#0B1020</span></div>
+    </div>
+
+    <div class="label" style="margin:32px 0 12px">Semantic ramps</div>
+    <div class="semantic-grid">
+      <div class="semantic-card">
+        <h4>Success</h4>
+        <div class="sw-stack">
+          <div style="background:var(--success-50); color:var(--success-700)">50</div>
+          <div style="background:var(--success-500); color:#fff">500</div>
+          <div style="background:var(--success-700); color:#fff">700</div>
+        </div>
+        <p class="desc">Cleared decisions, on-target metrics, completed states.</p>
+      </div>
+      <div class="semantic-card">
+        <h4>Warning</h4>
+        <div class="sw-stack">
+          <div style="background:var(--warning-50); color:var(--warning-700)">50</div>
+          <div style="background:var(--warning-500); color:#fff">500</div>
+          <div style="background:var(--warning-700); color:#fff">700</div>
+        </div>
+        <p class="desc">Referrals, near-threshold KPIs, things that want a human look.</p>
+      </div>
+      <div class="semantic-card">
+        <h4>Danger</h4>
+        <div class="sw-stack">
+          <div style="background:var(--danger-50); color:var(--danger-700)">50</div>
+          <div style="background:var(--danger-500); color:#fff">500</div>
+          <div style="background:var(--danger-700); color:#fff">700</div>
+        </div>
+        <p class="desc">Declines, errors, breaches. Never decorative — always actionable.</p>
+      </div>
+      <div class="semantic-card">
+        <h4>Info / Brand</h4>
+        <div class="sw-stack">
+          <div style="background:var(--info-50); color:var(--info-700)">50</div>
+          <div style="background:var(--info-500); color:#fff">500</div>
+          <div style="background:var(--info-700); color:#fff">700</div>
+        </div>
+        <p class="desc">In-review, neutral status, brand-coloured emphasis in flat surfaces.</p>
+      </div>
+    </div>
+
+    <div class="label" style="margin:32px 0 12px">Accent · used sparingly</div>
+    <div class="row gap-4" style="align-items:stretch">
+      <div class="swatch is-dark" style="background:var(--highlight); flex: 0 0 200px">
+        <span class="step">Highlight</span><span class="hex">#FFD84D</span>
+      </div>
+      <div class="specimen" style="flex:1; padding:18px">
+        <div class="label" style="margin-bottom:8px">When to use yellow</div>
+        <p style="color:var(--ink-2); font-size:13.5px; max-width:680px">
+          Reserved for "look here right now" — the one number on the page you most need a user to act on,
+          or to mark the brand colour itself on the swatch grid. Never as a fill for buttons, charts, or
+          large surfaces; never alongside another saturated colour. If everything is highlighted, nothing is.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────── TYPOGRAPHY ─────────────── -->
+  <section class="section">
+    <header class="section-head">
+      <div class="section-num">02</div>
+      <h2 class="section-title">Typography</h2>
+      <p class="section-sub">Geist for everything UI; Instrument Serif italics for warmth on hero numbers and section openers; JetBrains Mono for primitives (IDs, codes, raw rates).</p>
+    </header>
+
+    <div class="type-row">
+      <div class="t-name"><strong>Display XL</strong>Geist 700</div>
+      <div class="t-sample t-display-xl tnum">£1,284,920</div>
+      <div class="t-spec">80 / 80<br>tracking −4%<br>tabular nums</div>
+    </div>
+    <div class="type-row">
+      <div class="t-name"><strong>Display L</strong>Geist 700</div>
+      <div class="t-sample t-display-l">Decisions, faster.</div>
+      <div class="t-spec">56 / 57<br>tracking −3.5%</div>
+    </div>
+    <div class="type-row">
+      <div class="t-name"><strong>Display M / Serif Accent</strong>Instrument Serif italic</div>
+      <div class="t-sample t-serif">Compounded.</div>
+      <div class="t-spec">44 / 47<br>italic only<br>hero / accent</div>
+    </div>
+    <div class="type-row">
+      <div class="t-name"><strong>H1</strong>Geist 700</div>
+      <div class="t-sample t-h1">Application pipeline</div>
+      <div class="t-spec">32 / 37<br>tracking −2.5%</div>
+    </div>
+    <div class="type-row">
+      <div class="t-name"><strong>H2</strong>Geist 700</div>
+      <div class="t-sample t-h2">Today's decisions</div>
+      <div class="t-spec">24 / 29<br>tracking −2%</div>
+    </div>
+    <div class="type-row">
+      <div class="t-name"><strong>H3</strong>Geist 600</div>
+      <div class="t-sample t-h3">Underwriting queue</div>
+      <div class="t-spec">18 / 23<br>tracking −1.5%</div>
+    </div>
+    <div class="type-row">
+      <div class="t-name"><strong>Body L</strong>Geist 400</div>
+      <div class="t-sample t-body-l">Northgate Haulage Ltd applied for a £186,400 advance against two new DAF tractor units. The deal cleared underwriting at 7.20% APR.</div>
+      <div class="t-spec">16 / 25</div>
+    </div>
+    <div class="type-row">
+      <div class="t-name"><strong>Body M (default)</strong>Geist 400</div>
+      <div class="t-sample t-body-m">Body M is the workhorse — table cells, paragraph copy, form values. Tabular numerics are on by default so columns of money line up.</div>
+      <div class="t-spec">14 / 22<br>default UI body</div>
+    </div>
+    <div class="type-row">
+      <div class="t-name"><strong>Body S</strong>Geist 400</div>
+      <div class="t-sample t-body-s">Supporting copy: helper text, captions, secondary metadata.</div>
+      <div class="t-spec">13 / 20</div>
+    </div>
+    <div class="type-row">
+      <div class="t-name"><strong>Label</strong>Geist 600 · uppercase</div>
+      <div class="t-sample t-label">Section labels &middot; tracking 12%</div>
+      <div class="t-spec">11 / 15<br>tracking +12%</div>
+    </div>
+    <div class="type-row">
+      <div class="t-name"><strong>Mono</strong>JetBrains Mono 400/500</div>
+      <div class="t-sample t-mono">RL-48201 → underwrite.review · APR 6.45% · LTV 0.78</div>
+      <div class="t-spec">13 / 20<br>IDs, rates, codes</div>
+    </div>
+  </section>
+
+  <!-- ─────────────── BUTTONS ─────────────── -->
+  <section class="section">
+    <header class="section-head">
+      <div class="section-num">03</div>
+      <h2 class="section-title">Buttons</h2>
+      <p class="section-sub">One primary per surface. Secondary for parallel choices. Ghost for tertiary. Danger only for destructive confirmations.</p>
+    </header>
+
+    <div class="grid grid-2">
+      <div class="specimen">
+        <div class="specimen-head"><h3>Variants</h3><span class="label">Hierarchy</span></div>
+        <div class="row gap-3" style="flex-wrap:wrap; align-items:center">
+          <button class="btn btn-primary">Run decision</button>
+          <button class="btn btn-secondary">Save draft</button>
+          <button class="btn btn-ghost">Cancel</button>
+          <button class="btn btn-danger">Decline</button>
+          <a class="btn btn-link" href="#">View audit log →</a>
+        </div>
+      </div>
+
+      <div class="specimen">
+        <div class="specimen-head"><h3>Sizes</h3><span class="label">Density</span></div>
+        <div class="row gap-3" style="align-items:center; flex-wrap:wrap">
+          <button class="btn btn-primary btn-sm">Small · 32</button>
+          <button class="btn btn-primary">Default · 38</button>
+          <button class="btn btn-primary btn-lg">Large · 48</button>
+        </div>
+      </div>
+
+      <div class="specimen">
+        <div class="specimen-head"><h3>With icons</h3><span class="label">Affordance</span></div>
+        <div class="row gap-3" style="flex-wrap:wrap; align-items:center">
+          <button class="btn btn-primary">
+            <svg class="btn-icon" viewBox="0 0 16 16"><path d="M8 3v10M3 8h10" stroke-linecap="round"/></svg>
+            New application
+          </button>
+          <button class="btn btn-secondary">
+            Export CSV
+            <svg class="btn-icon" viewBox="0 0 16 16"><path d="M8 3v8m0 0l-3-3m3 3l3-3M3 13h10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="btn btn-ghost">
+            <svg class="btn-icon" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5"/><path d="M11.5 11.5L14 14" stroke-linecap="round"/></svg>
+            Filter
+          </button>
+        </div>
+      </div>
+
+      <div class="specimen">
+        <div class="specimen-head"><h3>States</h3><span class="label">Interaction</span></div>
+        <div class="row gap-3" style="flex-wrap:wrap; align-items:center">
+          <button class="btn btn-primary">Default</button>
+          <button class="btn btn-primary" style="background: var(--indigo-700)">Hover</button>
+          <button class="btn btn-primary" style="background: var(--indigo-800)">Active</button>
+          <button class="btn btn-primary" style="box-shadow: 0 0 0 3px rgba(42,58,255,0.25)">Focused</button>
+          <button class="btn btn-primary" disabled>Disabled</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────── FORM CONTROLS ─────────────── -->
+  <section class="section">
+    <header class="section-head">
+      <div class="section-num">04</div>
+      <h2 class="section-title">Form controls</h2>
+      <p class="section-sub">Inputs sit at 40px tall with a clear focus ring. Always pair with a label; hints go below; errors replace hints.</p>
+    </header>
+
+    <div class="grid grid-3">
+      <div class="specimen col gap-4">
+        <div class="specimen-head"><h3>Text input</h3><span class="label">Default / focus / error</span></div>
+        <div class="field">
+          <label class="field-label" for="f-1">Applicant name</label>
+          <input id="f-1" class="tf" type="text" placeholder="e.g. Northgate Haulage Ltd" />
+          <span class="field-hint">Legal entity as registered with Companies House.</span>
+        </div>
+        <div class="field">
+          <label class="field-label" for="f-2">Email</label>
+          <input id="f-2" class="tf" type="email" value="finance@northgate.co.uk" />
+        </div>
+        <div class="field">
+          <label class="field-label" for="f-3">VAT number</label>
+          <input id="f-3" class="tf is-error" type="text" value="GB 123 456 78" />
+          <span class="field-err">Must be 9 digits, no spaces.</span>
+        </div>
+        <div class="field">
+          <label class="field-label" for="f-4">Broker</label>
+          <input id="f-4" class="tf" type="text" value="K. Patel" disabled />
+        </div>
+      </div>
+
+      <div class="specimen col gap-4">
+        <div class="specimen-head"><h3>Group + adornment</h3><span class="label">Prefix / suffix</span></div>
+        <div class="field">
+          <label class="field-label" for="f-5">Advance amount</label>
+          <div class="tf-group">
+            <span class="adornment">£</span>
+            <input id="f-5" class="tf tnum" type="text" value="186,400" />
+            <span class="adornment right">GBP</span>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="f-6">APR</label>
+          <div class="tf-group">
+            <input id="f-6" class="tf tnum" type="text" value="7.20" />
+            <span class="adornment right">%</span>
+          </div>
+          <span class="field-hint">Stored as basis points internally (720).</span>
+        </div>
+        <div class="field">
+          <label class="field-label" for="f-7">Search applicants</label>
+          <div class="tf-group">
+            <span class="adornment">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="7" cy="7" r="5"/><path d="M11 11l3 3" stroke-linecap="round"/></svg>
+            </span>
+            <input id="f-7" class="tf" type="text" placeholder="Ref, name, or asset…" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="f-8">Decision deadline</label>
+          <input id="f-8" class="tf" type="text" value="2026-05-21" />
+        </div>
+      </div>
+
+      <div class="specimen col gap-4">
+        <div class="specimen-head"><h3>Choices &amp; switches</h3><span class="label">Boolean / select</span></div>
+        <div class="col gap-2">
+          <label class="checkbox"><input type="checkbox" checked/>Auto-route to senior underwriter</label>
+          <label class="checkbox"><input type="checkbox" />Require dual approval</label>
+          <label class="checkbox"><input type="checkbox" />Send applicant email on decision</label>
+        </div>
+        <hr />
+        <div class="col gap-2">
+          <span class="field-label">Risk band</span>
+          <label class="radio"><input type="radio" name="rb" checked/>A — Prime</label>
+          <label class="radio"><input type="radio" name="rb" />B — Standard</label>
+          <label class="radio"><input type="radio" name="rb" />C — Watch</label>
+        </div>
+        <hr />
+        <div class="col gap-2">
+          <span class="field-label">Display preferences</span>
+          <div class="row gap-3" style="align-items:center; justify-content:space-between">
+            <span style="font-size:13.5px">Show APR in chart tooltips</span>
+            <span class="toggle on" role="switch" aria-checked="true"></span>
+          </div>
+          <div class="row gap-3" style="align-items:center; justify-content:space-between">
+            <span style="font-size:13.5px">Email me on referrals</span>
+            <span class="toggle" role="switch" aria-checked="false"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="label" style="margin:24px 0 12px">Status pills</div>
+    <div class="row gap-3" style="flex-wrap:wrap">
+      <span class="pill pill-ok"><span class="dot"></span>Cleared</span>
+      <span class="pill pill-warn"><span class="dot"></span>Referred</span>
+      <span class="pill pill-bad"><span class="dot"></span>Declined</span>
+      <span class="pill pill-info"><span class="dot"></span>In review</span>
+      <span class="pill pill-mute"><span class="dot"></span>Draft</span>
+      <span class="pill"><span class="dot" style="background:var(--ok)"></span>12 cleared today</span>
+      <span class="pill"><span class="dot" style="background:var(--warn)"></span>5 referred</span>
+      <span class="pill"><span class="dot" style="background:var(--bad)"></span>2 declined</span>
+    </div>
+  </section>
+
+  <!-- ─────────────── DATA DISPLAY ─────────────── -->
+  <section class="section">
+    <header class="section-head">
+      <div class="section-num">05</div>
+      <h2 class="section-title">Data display</h2>
+      <p class="section-sub">Stats lead with the number; deltas explain context. Tables stay quiet — alignment and tabular numerals do the heavy lifting.</p>
+    </header>
+
+    <div class="label" style="margin-bottom:12px">Stat cards</div>
+    <div class="grid grid-4">
+      <div class="stat-card">
+        <div class="k">Decisions today</div>
+        <div class="v tnum">47<span class="unit">apps</span></div>
+        <div class="delta"><span class="pill pill-ok"><span class="dot"></span>+12%</span><span>vs. 7-day avg</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="k">Avg. time to decision</div>
+        <div class="v tnum">2.4<span class="unit">hrs</span></div>
+        <div class="delta"><span class="pill pill-info"><span class="dot"></span>–18m</span><span>since Monday</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="k">Default rate, 90d</div>
+        <div class="v tnum">1.32<span class="unit">%</span></div>
+        <div class="delta"><span class="pill pill-warn"><span class="dot"></span>watch</span><span>1.18% target</span></div>
+      </div>
+      <div class="stat-card is-feature">
+        <div class="k">Pipeline value, week</div>
+        <div class="v tnum">£1.28<span class="unit">m</span></div>
+        <div class="delta"><span class="pill" style="background:rgba(255,216,77,0.15); color:var(--highlight); border-color:transparent"><span class="dot"></span>+£186k</span><span>vs. last week</span></div>
+      </div>
+    </div>
+
+    <div class="label" style="margin:32px 0 12px">Charts</div>
+    <div class="grid grid-3">
+      <div class="chart-card">
+        <div class="chart-card-head"><h4>Decisions per day</h4><span class="label">14d</span></div>
+        <svg viewBox="0 0 320 120" width="100%" height="120" aria-hidden>
+          <g fill="var(--indigo-200)">
+            <rect x="6"   y="60" width="14" height="56" rx="2"/>
+            <rect x="28"  y="48" width="14" height="68" rx="2"/>
+            <rect x="50"  y="70" width="14" height="46" rx="2"/>
+            <rect x="72"  y="34" width="14" height="82" rx="2"/>
+            <rect x="94"  y="42" width="14" height="74" rx="2"/>
+            <rect x="116" y="56" width="14" height="60" rx="2"/>
+            <rect x="138" y="28" width="14" height="88" rx="2"/>
+            <rect x="160" y="40" width="14" height="76" rx="2"/>
+            <rect x="182" y="22" width="14" height="94" rx="2"/>
+            <rect x="204" y="30" width="14" height="86" rx="2"/>
+            <rect x="226" y="20" width="14" height="96" rx="2"/>
+            <rect x="248" y="38" width="14" height="78" rx="2"/>
+            <rect x="270" y="14" width="14" height="102" rx="2"/>
+          </g>
+          <rect x="292" y="10" width="14" height="106" rx="2" fill="var(--indigo-600)"/>
+        </svg>
+        <div class="row" style="justify-content:space-between"><span class="mute" style="font-size:12px">M T W T F S S</span><span class="mono tnum" style="font-size:12px">peak 52</span></div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-card-head"><h4>Avg. APR by week</h4><span class="label">12w</span></div>
+        <svg viewBox="0 0 320 120" width="100%" height="120" aria-hidden>
+          <defs>
+            <linearGradient id="ar" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--indigo-600)" stop-opacity="0.18"/>
+              <stop offset="100%" stop-color="var(--indigo-600)" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path d="M0 90 L30 84 L60 70 L90 78 L120 60 L150 64 L180 46 L210 50 L240 40 L270 44 L300 28 L320 32 L320 120 L0 120 Z" fill="url(#ar)" />
+          <path d="M0 90 L30 84 L60 70 L90 78 L120 60 L150 64 L180 46 L210 50 L240 40 L270 44 L300 28 L320 32" fill="none" stroke="var(--indigo-600)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="320" cy="32" r="4" fill="var(--indigo-600)" stroke="#fff" stroke-width="2"/>
+        </svg>
+        <div class="row" style="justify-content:space-between">
+          <span class="mute" style="font-size:12px">Mar → May</span>
+          <span class="mono tnum" style="font-size:12px">6.45% latest</span>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-card-head"><h4>Decision mix · today</h4><span class="label">n=47</span></div>
+        <div class="row gap-4" style="align-items:center">
+          <svg viewBox="0 0 100 100" width="92" height="92" aria-hidden style="flex:0 0 auto">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="var(--slate-200)" stroke-width="16"/>
+            <!-- Stroke-dasharray draws arcs; total circumference ≈ 251.3 -->
+            <circle cx="50" cy="50" r="40" fill="none" stroke="var(--ok)"    stroke-width="16" stroke-dasharray="160 251.3" transform="rotate(-90 50 50)"/>
+            <circle cx="50" cy="50" r="40" fill="none" stroke="var(--warn)"  stroke-width="16" stroke-dasharray="56 251.3"  stroke-dashoffset="-160" transform="rotate(-90 50 50)"/>
+            <circle cx="50" cy="50" r="40" fill="none" stroke="var(--bad)"   stroke-width="16" stroke-dasharray="20 251.3"  stroke-dashoffset="-216" transform="rotate(-90 50 50)"/>
+          </svg>
+          <div class="col gap-2" style="flex:1">
+            <div class="row gap-2" style="justify-content:space-between"><span><span class="dot" style="background:var(--ok); display:inline-block; width:8px; height:8px; border-radius:999px; margin-right:6px"></span>Cleared</span><span class="mono tnum">30 · 64%</span></div>
+            <div class="row gap-2" style="justify-content:space-between"><span><span class="dot" style="background:var(--warn); display:inline-block; width:8px; height:8px; border-radius:999px; margin-right:6px"></span>Referred</span><span class="mono tnum">11 · 23%</span></div>
+            <div class="row gap-2" style="justify-content:space-between"><span><span class="dot" style="background:var(--bad); display:inline-block; width:8px; height:8px; border-radius:999px; margin-right:6px"></span>Declined</span><span class="mono tnum">6 · 13%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="label" style="margin:32px 0 12px">Table</div>
+    <div class="specimen" style="padding: 0; overflow: hidden">
+      <table class="dt">
+        <thead>
+          <tr><th>Ref</th><th>Applicant</th><th>Asset</th><th>Broker</th><th class="num">Advance</th><th class="num">APR</th><th class="num">Term</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono">RL-48201</td><td>Northgate Haulage Ltd</td><td>2× DAF XF tractor unit</td><td>K. Patel</td><td class="num tnum">£186,400</td><td class="num tnum">7.20%</td><td class="num tnum">60m</td><td><span class="pill pill-ok"><span class="dot"></span>Cleared</span></td></tr>
+          <tr><td class="mono">RL-48214</td><td>Pell Engineering</td><td>CNC mill, refurbished</td><td>S. Owusu</td><td class="num tnum">£62,000</td><td class="num tnum">8.95%</td><td class="num tnum">48m</td><td><span class="pill pill-warn"><span class="dot"></span>Referred</span></td></tr>
+          <tr><td class="mono">RL-48222</td><td>Bluefield Coachworks</td><td>Spray booth installation</td><td>M. Adeyemi</td><td class="num tnum">£24,750</td><td class="num tnum">9.40%</td><td class="num tnum">36m</td><td><span class="pill pill-info"><span class="dot"></span>In review</span></td></tr>
+          <tr><td class="mono">RL-48229</td><td>Harland Solar Ltd</td><td>Battery + inverter stack</td><td>R. Owens</td><td class="num tnum">£91,200</td><td class="num tnum">6.75%</td><td class="num tnum">72m</td><td><span class="pill pill-ok"><span class="dot"></span>Cleared</span></td></tr>
+          <tr><td class="mono">RL-48241</td><td>Cawston Logistics</td><td>Mercedes Sprinter ×3</td><td>K. Patel</td><td class="num tnum">£112,800</td><td class="num tnum">7.85%</td><td class="num tnum">60m</td><td><span class="pill pill-bad"><span class="dot"></span>Declined</span></td></tr>
+          <tr><td class="mono">RL-48256</td><td>Marsdyke Farms</td><td>John Deere combine</td><td>S. Owusu</td><td class="num tnum">£268,500</td><td class="num tnum">6.40%</td><td class="num tnum">84m</td><td><span class="pill pill-ok"><span class="dot"></span>Cleared</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ─────────────── SAMPLE DASHBOARD ─────────────── -->
+  <section class="section">
+    <header class="section-head">
+      <div class="section-num">06</div>
+      <h2 class="section-title">In situ — Underwriting dashboard</h2>
+      <p class="section-sub">Tokens and components assembled into the actual surface they're built for.</p>
+    </header>
+
+    <div class="app">
+      <!-- Sidebar -->
+      <aside class="app-side">
+        <div class="brand-row">
+          <svg viewBox="0 0 120 120" aria-hidden>
+            <rect x="0" y="0" width="120" height="120" rx="26" fill="var(--brand)" />
+            <path d="M28 86 V34 H56 C72 34 80 42 80 54 C80 62 75 68 67 70 L86 86 H72 L54 70 H40 V86 Z M40 60 H56 C64 60 68 57 68 52 C68 47 64 44 56 44 H40 Z" fill="#fff" />
+          </svg>
+          <span class="name">Rateline</span>
+        </div>
+        <div class="nav-section">Workspace</div>
+        <a class="nav active" href="#"><svg class="ico" viewBox="0 0 16 16"><path d="M2 8l6-5 6 5v6H2z"/><path d="M6 14V9h4v5"/></svg>Overview</a>
+        <a class="nav" href="#"><svg class="ico" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M2 6h12M6 3v10"/></svg>Pipeline</a>
+        <a class="nav" href="#"><svg class="ico" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5"/><path d="M11.5 11.5L14 14" stroke-linecap="round"/></svg>Applications</a>
+        <a class="nav" href="#"><svg class="ico" viewBox="0 0 16 16"><path d="M2 13V3h12v10z"/><path d="M5 10V7M8 10V5M11 10V8"/></svg>Reports</a>
+        <div class="nav-section">Admin</div>
+        <a class="nav" href="#"><svg class="ico" viewBox="0 0 16 16"><circle cx="8" cy="6" r="2.5"/><path d="M3 14c0-2.8 2.2-5 5-5s5 2.2 5 5"/></svg>Brokers</a>
+        <a class="nav" href="#"><svg class="ico" viewBox="0 0 16 16"><circle cx="8" cy="8" r="2"/><path d="M8 1.5v2M8 12.5v2M14.5 8h-2M3.5 8h-2"/></svg>Settings</a>
+
+        <div class="user">
+          <div class="ava">JC</div>
+          <div>
+            <div class="name">Jordan Cline</div>
+            <div class="role">Senior underwriter</div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <main class="app-main">
+        <div class="app-topbar">
+          <h2>Today's <em>queue</em></h2>
+          <span class="pill pill-info" style="margin-left:8px"><span class="dot"></span>Live · 47 in flight</span>
+          <div class="topbar-actions">
+            <div class="tf-group" style="width: 260px">
+              <span class="adornment"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="7" cy="7" r="5"/><path d="M11 11l3 3" stroke-linecap="round"/></svg></span>
+              <input class="tf" placeholder="Search ref or applicant…" />
+            </div>
+            <button class="btn btn-secondary">Filters</button>
+            <button class="btn btn-primary">
+              <svg class="btn-icon" viewBox="0 0 16 16"><path d="M8 3v10M3 8h10" stroke-linecap="round"/></svg>
+              New
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-4">
+          <div class="stat-card"><div class="k">Decisions today</div><div class="v tnum">47<span class="unit">apps</span></div><div class="delta"><span class="pill pill-ok"><span class="dot"></span>+12%</span><span>vs. 7-day avg</span></div></div>
+          <div class="stat-card"><div class="k">Avg. time to decision</div><div class="v tnum">2.4<span class="unit">hrs</span></div><div class="delta"><span class="pill pill-info"><span class="dot"></span>–18m</span><span>since Monday</span></div></div>
+          <div class="stat-card"><div class="k">Default rate, 90d</div><div class="v tnum">1.32<span class="unit">%</span></div><div class="delta"><span class="pill pill-warn"><span class="dot"></span>watch</span><span>1.18% target</span></div></div>
+          <div class="stat-card is-feature"><div class="k">Pipeline value, week</div><div class="v tnum">£1.28<span class="unit">m</span></div><div class="delta"><span class="pill" style="background:rgba(255,216,77,0.15); color:var(--highlight); border-color:transparent"><span class="dot"></span>+£186k</span><span>vs. last week</span></div></div>
+        </div>
+
+        <div class="grid" style="grid-template-columns: 1.4fr 1fr; gap: 16px">
+          <div class="chart-card">
+            <div class="chart-card-head">
+              <h4>Decisions per day, last 14 days</h4>
+              <div class="row gap-2">
+                <span class="pill pill-mute">Daily</span>
+                <span class="pill" style="background:var(--brand-tint); color:var(--brand); border-color:transparent">Cleared</span>
+              </div>
+            </div>
+            <svg viewBox="0 0 640 200" width="100%" height="200" aria-hidden>
+              <g stroke="var(--line)" stroke-dasharray="2 4">
+                <line x1="0" y1="40"  x2="640" y2="40"/>
+                <line x1="0" y1="90"  x2="640" y2="90"/>
+                <line x1="0" y1="140" x2="640" y2="140"/>
+              </g>
+              <g fill="var(--indigo-200)">
+                <rect x="10"  y="110" width="26" height="80" rx="3"/>
+                <rect x="56"  y="86"  width="26" height="104" rx="3"/>
+                <rect x="102" y="130" width="26" height="60" rx="3"/>
+                <rect x="148" y="60"  width="26" height="130" rx="3"/>
+                <rect x="194" y="74"  width="26" height="116" rx="3"/>
+                <rect x="240" y="100" width="26" height="90" rx="3"/>
+                <rect x="286" y="48"  width="26" height="142" rx="3"/>
+                <rect x="332" y="70"  width="26" height="120" rx="3"/>
+                <rect x="378" y="30"  width="26" height="160" rx="3"/>
+                <rect x="424" y="48"  width="26" height="142" rx="3"/>
+                <rect x="470" y="22"  width="26" height="168" rx="3"/>
+                <rect x="516" y="58"  width="26" height="132" rx="3"/>
+                <rect x="562" y="14"  width="26" height="176" rx="3"/>
+              </g>
+              <rect x="608" y="6" width="26" height="184" rx="3" fill="var(--indigo-600)"/>
+              <text x="621" y="0" fill="var(--ink)" font-family="JetBrains Mono" font-size="11" text-anchor="middle" dy="-2">52</text>
+            </svg>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-card-head"><h4>Decision mix · today</h4><span class="label">n=47</span></div>
+            <div class="row gap-4" style="align-items:center">
+              <svg viewBox="0 0 100 100" width="120" height="120" aria-hidden style="flex:0 0 auto">
+                <circle cx="50" cy="50" r="40" fill="none" stroke="var(--slate-200)" stroke-width="16"/>
+                <circle cx="50" cy="50" r="40" fill="none" stroke="var(--ok)"   stroke-width="16" stroke-dasharray="160 251.3" transform="rotate(-90 50 50)"/>
+                <circle cx="50" cy="50" r="40" fill="none" stroke="var(--warn)" stroke-width="16" stroke-dasharray="56 251.3"  stroke-dashoffset="-160" transform="rotate(-90 50 50)"/>
+                <circle cx="50" cy="50" r="40" fill="none" stroke="var(--bad)"  stroke-width="16" stroke-dasharray="20 251.3"  stroke-dashoffset="-216" transform="rotate(-90 50 50)"/>
+                <text x="50" y="50" font-family="Geist" font-size="18" font-weight="700" text-anchor="middle" dominant-baseline="central" fill="var(--ink)">47</text>
+                <text x="50" y="64" font-family="Geist" font-size="8"  text-anchor="middle" fill="var(--mute)">today</text>
+              </svg>
+              <div class="col gap-2" style="flex:1">
+                <div class="row" style="justify-content:space-between; font-size:13px"><span><span class="dot" style="background:var(--ok); display:inline-block; width:8px; height:8px; border-radius:999px; margin-right:6px"></span>Cleared</span><span class="mono tnum">30 · 64%</span></div>
+                <div class="row" style="justify-content:space-between; font-size:13px"><span><span class="dot" style="background:var(--warn); display:inline-block; width:8px; height:8px; border-radius:999px; margin-right:6px"></span>Referred</span><span class="mono tnum">11 · 23%</span></div>
+                <div class="row" style="justify-content:space-between; font-size:13px"><span><span class="dot" style="background:var(--bad); display:inline-block; width:8px; height:8px; border-radius:999px; margin-right:6px"></span>Declined</span><span class="mono tnum">6 · 13%</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-card" style="padding: 0">
+          <div class="chart-card-head" style="padding: 16px 20px 0">
+            <h4>Live application queue</h4>
+            <div class="row gap-2">
+              <span class="pill pill-ok"><span class="dot"></span>12 cleared</span>
+              <span class="pill pill-warn"><span class="dot"></span>5 referred</span>
+              <span class="pill pill-bad"><span class="dot"></span>2 declined</span>
+              <button class="btn btn-ghost btn-sm">Export CSV</button>
+            </div>
+          </div>
+          <table class="dt">
+            <thead><tr><th>Ref</th><th>Applicant</th><th>Asset</th><th>Broker</th><th class="num">Advance</th><th class="num">APR</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">RL-48201</td><td>Northgate Haulage Ltd</td><td>2× DAF XF tractor unit</td><td>K. Patel</td><td class="num tnum">£186,400</td><td class="num tnum">7.20%</td><td><span class="pill pill-ok"><span class="dot"></span>Cleared</span></td></tr>
+              <tr><td class="mono">RL-48214</td><td>Pell Engineering</td><td>CNC mill, refurbished</td><td>S. Owusu</td><td class="num tnum">£62,000</td><td class="num tnum">8.95%</td><td><span class="pill pill-warn"><span class="dot"></span>Referred</span></td></tr>
+              <tr><td class="mono">RL-48222</td><td>Bluefield Coachworks</td><td>Spray booth installation</td><td>M. Adeyemi</td><td class="num tnum">£24,750</td><td class="num tnum">9.40%</td><td><span class="pill pill-info"><span class="dot"></span>In review</span></td></tr>
+              <tr><td class="mono">RL-48229</td><td>Harland Solar Ltd</td><td>Battery + inverter stack</td><td>R. Owens</td><td class="num tnum">£91,200</td><td class="num tnum">6.75%</td><td><span class="pill pill-ok"><span class="dot"></span>Cleared</span></td></tr>
+              <tr><td class="mono">RL-48241</td><td>Cawston Logistics</td><td>Mercedes Sprinter ×3</td><td>K. Patel</td><td class="num tnum">£112,800</td><td class="num tnum">7.85%</td><td><span class="pill pill-bad"><span class="dot"></span>Declined</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <!-- ─────────────── FOOTER NOTE ─────────────── -->
+  <footer style="margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; color: var(--mute); font-size: 12.5px;">
+    <span>Rateline design system · v0.1 · 2026.05.15</span>
+    <span class="mono">Drop in real brand assets to re-skin · all tokens live on <code>:root</code></span>
+  </footer>
+
+</div>
+
+</body>
+</html>

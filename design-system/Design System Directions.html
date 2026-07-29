@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Design System — Brand Directions</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  html, body { margin: 0; padding: 0; background: #f0eee9; }
+  body { font-family: 'Inter', -apple-system, sans-serif; }
+  #root { width: 100vw; height: 100vh; }
+
+  /* shared helpers used inside artboards */
+  .ab { box-sizing: border-box; width: 100%; height: 100%; padding: 36px; overflow: hidden; }
+  .ab h1, .ab h2, .ab h3, .ab h4, .ab p { margin: 0; }
+  .row { display: flex; }
+  .col { display: flex; flex-direction: column; }
+  .gap-4 { gap: 4px; } .gap-6 { gap: 6px; } .gap-8 { gap: 8px; }
+  .gap-10 { gap: 10px; } .gap-12 { gap: 12px; } .gap-16 { gap: 16px; }
+  .gap-20 { gap: 20px; } .gap-24 { gap: 24px; } .gap-32 { gap: 32px; }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+  /* ---- Direction A : Confident Indigo ---- */
+  .A {
+    --bg: #fbfaf8;
+    --panel: #ffffff;
+    --ink: #0b1020;
+    --ink-2: #3a3f55;
+    --mute: #6b7388;
+    --line: #e7e6e1;
+    --brand: #2a3aff;       /* electric indigo */
+    --brand-deep: #161d7a;
+    --accent: #ffd84d;      /* warm contrast highlight */
+    --ok: #119e6f;
+    --warn: #d97706;
+    --bad: #d6321f;
+    background: var(--bg); color: var(--ink);
+    font-family: 'Geist', 'Inter', sans-serif;
+  }
+  .A .h-sans { font-family: 'Geist', 'Inter', sans-serif; letter-spacing: -0.02em; }
+  .A .h-serif { font-family: 'Instrument Serif', serif; font-style: italic; letter-spacing: -0.01em; }
+
+  /* ---- Direction B : Voltage on Slate ---- */
+  .B {
+    --bg: #0e1117;
+    --panel: #161b22;
+    --panel-2: #1d242e;
+    --ink: #f4f5f7;
+    --ink-2: #c2c8d2;
+    --mute: #7e8694;
+    --line: #232a35;
+    --brand: #c4f24c;      /* electric lime */
+    --brand-deep: #9bc931;
+    --accent: #ff7a59;
+    --ok: #4ade80;
+    --warn: #facc15;
+    --bad: #fb7185;
+    background: var(--bg); color: var(--ink);
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+  }
+  .B .h-sans { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+
+  /* ---- Direction C : Warm Teal & Cream ---- */
+  .C {
+    --bg: #f5f1e8;
+    --panel: #fbf8f1;
+    --ink: #11302e;
+    --ink-2: #355552;
+    --mute: #6e837f;
+    --line: #e5dccb;
+    --brand: #0f7a6c;     /* deep teal */
+    --brand-deep: #0a4f47;
+    --accent: #e26a3a;    /* warm terracotta */
+    --ok: #2f7d4a;
+    --warn: #c98212;
+    --bad: #b3402a;
+    background: var(--bg); color: var(--ink);
+    font-family: 'Inter', sans-serif;
+  }
+  .C .h-sans { font-family: 'Inter', sans-serif; letter-spacing: -0.02em; }
+  .C .h-serif { font-family: 'Instrument Serif', serif; letter-spacing: -0.01em; }
+
+  /* component scaffolding common to all */
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+  .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--mute); font-weight: 600; }
+  .swatch { width: 100%; aspect-ratio: 1.6/1; border-radius: 10px; position: relative; overflow: hidden; }
+  .swatch-meta { position: absolute; left: 10px; bottom: 8px; font-size: 11px; line-height: 1.2; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 10px;
+         font-weight: 600; font-size: 13.5px; border: 1px solid transparent; cursor: pointer; }
+  .btn-primary { background: var(--brand); color: #fff; }
+  .B .btn-primary { color: #0e1117; }
+  .btn-secondary { background: transparent; color: var(--ink); border-color: var(--line); }
+  .btn-ghost { background: transparent; color: var(--ink-2); }
+  .pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; font-size: 11.5px; font-weight: 600;
+          border-radius: 999px; border: 1px solid var(--line); }
+  .dot { width: 7px; height: 7px; border-radius: 999px; background: currentColor; display: inline-block; }
+  .stat-num { font-weight: 700; font-size: 34px; letter-spacing: -0.025em; line-height: 1; }
+  .stat-num .unit { font-size: 18px; color: var(--mute); font-weight: 500; margin-left: 4px; }
+  table.dt { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.dt th, table.dt td { text-align: left; padding: 10px 10px; border-bottom: 1px solid var(--line); }
+  table.dt th { color: var(--mute); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
+  table.dt td.num { font-variant-numeric: tabular-nums; text-align: right; }
+
+  input.tf { width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 10px;
+             border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: inherit; font-size: 13.5px; }
+  .B input.tf { background: var(--panel-2); }
+  input.tf::placeholder { color: var(--mute); }
+
+  .placeholder-img {
+    background-image: repeating-linear-gradient(135deg, rgba(0,0,0,0.04) 0 6px, transparent 6px 12px);
+    background-color: var(--line);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--mute); font: 11px/1 'JetBrains Mono', monospace;
+  }
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" src="direction-a.jsx"></script>
+<script type="text/babel" src="direction-b.jsx"></script>
+<script type="text/babel" src="direction-c.jsx"></script>
+<script type="text/babel" src="app.jsx"></script>
+
+</body>
+</html>

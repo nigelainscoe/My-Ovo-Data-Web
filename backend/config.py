@@ -32,6 +32,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
 RESOURCES_DIR = Path(__file__).resolve().parent / "resources"
 STATIC_DIR = BASE_DIR / "static"
+PUBLIC_DIR = BASE_DIR / "public"   # site icons, served from the site root
 
 # Emit verbose JSON dumps to the log (equivalent to "DumpData" in AppSettings)
 DUMP_DATA = False

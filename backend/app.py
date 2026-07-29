@@ -332,4 +332,16 @@ def index() -> FileResponse:
     return FileResponse(config.STATIC_DIR / "index.html")
 
 
+# Icons live in public/ but are served from the root, where browsers expect them.
+# These must be declared before the catch-all mount below, which would shadow them.
+@app.get("/favicon.svg")
+def favicon_svg() -> FileResponse:
+    return FileResponse(config.PUBLIC_DIR / "favicon.svg")
+
+
+@app.get("/favicon-48.png")
+def favicon_png() -> FileResponse:
+    return FileResponse(config.PUBLIC_DIR / "favicon-48.png")
+
+
 app.mount("/", StaticFiles(directory=str(config.STATIC_DIR)), name="static")

@@ -1,0 +1,445 @@
+/* Billing Finance monitoring — component styles.
+   "Voltage on Slate" cosmetic re-skin (Direction 1C):
+   control-room dark theme, electric-lime accent, neon status signals. */
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  font-feature-settings: 'tnum';
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, p { margin: 0; }
+button { font-family: inherit; }
+
+/* Layout primitives (mirror of design-system). */
+.row { display: flex; }
+.col { display: flex; flex-direction: column; }
+.gap-1 { gap: 4px; } .gap-2 { gap: 8px; } .gap-3 { gap: 12px; }
+.gap-4 { gap: 16px; } .gap-5 { gap: 20px; } .gap-6 { gap: 24px; }
+.gap-8 { gap: 32px; }
+
+.mono { font-family: var(--font-mono); }
+.serif { font-family: var(--font-serif); font-style: italic; }
+.mute { color: var(--mute); }
+.tnum { font-variant-numeric: tabular-nums; }
+
+.h-sans { font-family: var(--font-sans); }
+.h-serif { font-family: var(--font-serif); font-style: italic; }
+
+.label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  color: var(--mute);
+}
+
+/* Page chrome. */
+.page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 48px 80px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--r-5);
+  padding: 20px;
+  box-shadow: var(--shadow-1);
+}
+
+/* Header. */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 20px 24px;
+  border-radius: var(--r-6);
+}
+.header-brand { display: flex; align-items: center; gap: 14px; }
+.header-brand svg { width: 48px; height: 48px; }
+/* The Ratelinemark glyph ships with a hardcoded white fill; on the lime
+   plaque that reads poorly, so recolour it to the slate ink for the dark theme. */
+.header-brand svg path { fill: var(--brand-ink); }
+.header-brand-text { display: flex; flex-direction: column; gap: 2px; }
+.header-brand-name {
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.header-brand-tag {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--mute);
+}
+.header-controls { display: flex; align-items: center; gap: 12px; }
+.header-adc {
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--mute);
+}
+
+.headline {
+  margin-top: 16px;
+  padding: 32px 28px;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r-6);
+  /* Faint gallery-wall grid + a lime glow bleeding in from the top-right. */
+  background-color: var(--panel);
+  background-image:
+    radial-gradient(70% 120% at 92% -10%, var(--brand-tint) 0%, transparent 60%),
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: auto, 34px 34px, 34px 34px;
+  background-position: 0 0, -1px -1px, -1px -1px;
+}
+.headline-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brand);
+}
+.headline-eyebrow .live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--ok);
+  box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.20), 0 0 12px rgba(74, 222, 128, 0.6);
+}
+.headline h1 {
+  font-size: 46px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  color: var(--ink);
+}
+.headline h1 em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--brand);
+}
+.headline p {
+  margin-top: 10px;
+  color: var(--ink-2);
+  font-size: 14.5px;
+  max-width: 640px;
+}
+.headline strong { color: var(--ink); font-weight: 600; }
+
+/* Buttons. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: var(--r-4);
+  font: 700 13px/1 var(--font-sans);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background 0.12s, box-shadow 0.12s, transform 0.06s;
+}
+.btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.btn-primary {
+  background: var(--brand);
+  color: var(--brand-ink);
+  box-shadow: 0 0 24px var(--brand-glow);
+}
+.btn-primary:hover { background: var(--lime-300); box-shadow: 0 0 30px var(--brand-glow); }
+.btn-primary:active { background: var(--brand-deep); transform: translateY(1px); }
+.btn-secondary {
+  background: var(--panel-2);
+  color: var(--ink-2);
+  border-color: var(--line-strong);
+  font-weight: 600;
+}
+.btn-secondary:hover { background: var(--slate-700); color: var(--ink); }
+.btn[disabled] { opacity: 0.45; cursor: not-allowed; }
+
+/* Select. */
+.tf-select {
+  appearance: none;
+  padding: 9px 36px 9px 13px;
+  border-radius: var(--r-4);
+  border: 1px solid var(--line-strong);
+  background: var(--panel-2)
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' stroke='%237e8694' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>")
+    no-repeat right 12px center;
+  color: var(--ink);
+  font: 500 13px/1.4 var(--font-sans);
+  cursor: pointer;
+}
+.tf-select option { background: var(--panel); color: var(--ink); }
+.tf-select:focus {
+  outline: 0;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(196, 242, 76, 0.18);
+}
+
+/* Checkbox. */
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-2);
+  cursor: pointer;
+  user-select: none;
+}
+.checkbox input {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 4px;
+  background: var(--panel-2);
+  cursor: pointer;
+  transition: 0.12s;
+}
+.checkbox input:checked {
+  background: var(--brand);
+  border-color: var(--brand);
+}
+.checkbox input:checked::after {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 8px;
+  border: solid var(--brand-ink);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) translate(1px, -1px);
+  margin: 0 auto;
+}
+.header-scale {
+  padding: 0 4px;
+  margin: 0 2px;
+}
+
+/* Pills. */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  font-size: 11.5px;
+  font-weight: 600;
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+}
+.pill .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+}
+.pill-ok   { color: var(--ok);   background: var(--success-tint); border-color: transparent; }
+.pill-bad  { color: var(--bad);  background: var(--danger-tint);  border-color: transparent; }
+.pill-mute { color: var(--ink-2);background: var(--panel-2);      border-color: transparent; }
+.pill-warn { color: var(--warn); background: var(--warning-tint); border-color: transparent; }
+
+/* Identity groups — Partners / Orchestrators. */
+.identity-groups {
+  margin-top: 40px;
+  display: flex;
+  gap: 56px;
+  flex-wrap: wrap;
+}
+.identity-group { display: flex; flex-direction: column; gap: 18px; }
+.identity-heading { padding-left: 4px; }
+.identity-row { display: flex; gap: 14px; flex-wrap: wrap; }
+
+/* Availability tile — rounded, status-tinted card with status word + name. */
+.identity-box {
+  width: 120px;
+  min-height: 92px;
+  border-radius: var(--r-5);
+  border: 1px solid var(--line);
+  background: var(--panel);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  text-align: left;
+  cursor: pointer;
+  transition: box-shadow 0.12s, transform 0.06s, border-color 0.12s, opacity 0.15s;
+}
+.identity-box:hover { border-color: var(--line-strong); transform: translateY(-1px); }
+.identity-box:active { transform: translateY(1px); }
+.identity-box:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.identity-box.is-loading { opacity: 0.55; }
+
+.identity-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+.identity-status .identity-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+}
+.identity-name {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.identity-box.status-ok     { background: var(--success-tint); box-shadow: 0 0 24px var(--success-glow); }
+.identity-box.status-ok     .identity-status { color: var(--ok); }
+.identity-box.status-bad    { background: var(--warning-tint); box-shadow: 0 0 24px var(--warning-glow); }
+.identity-box.status-bad    .identity-status { color: var(--warn); }
+.identity-box.status-error  { background: var(--danger-tint);  box-shadow: 0 0 24px var(--danger-glow); }
+.identity-box.status-error  .identity-status { color: var(--bad); }
+.identity-box.status-nodata { background: var(--panel-2); }
+.identity-box.status-nodata .identity-status { color: var(--mute); }
+
+/* Divider between identity groups and the business funnel. */
+.section-divider {
+  margin-top: 40px;
+  max-width: 460px;
+  border-top: 1px solid var(--line);
+}
+
+/* Funnel row — a plain left-to-right row of stat tiles, no connecting lines. */
+.funnel-section { margin-top: 28px; }
+.funnel-section-label { padding-left: 4px; margin-bottom: 12px; }
+
+.funnel-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+.funnel-row .stat-tile { flex: 1 1 150px; min-width: 150px; }
+
+/* Stat tile. */
+.stat-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 16px 14px;
+  cursor: pointer;
+  user-select: none;
+  transition: box-shadow 0.12s, border-color 0.12s, transform 0.06s;
+  overflow: hidden;
+  min-height: 156px;
+}
+/* Status accent bar across the top of each tile, with a matching glow. */
+.stat-tile::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--line-strong);
+}
+.stat-tile.status-ok::before     { background: var(--ok);  box-shadow: 0 0 12px var(--ok); }
+.stat-tile.status-bad::before    { background: var(--bad); box-shadow: 0 0 12px var(--bad); }
+.stat-tile.status-error::before  { background: var(--bad); box-shadow: 0 0 12px var(--bad); }
+.stat-tile.status-nodata::before { background: var(--line-strong); }
+
+.stat-tile.status-ok    { box-shadow: 0 10px 30px var(--success-glow); }
+.stat-tile.status-bad   { box-shadow: 0 10px 30px var(--warning-glow); }
+.stat-tile.status-error { box-shadow: 0 10px 30px var(--danger-glow); }
+
+.stat-tile:hover { border-color: var(--line-strong); transform: translateY(-1px); }
+.stat-tile:active { transform: translateY(1px); }
+.stat-tile.is-loading .stat-num,
+.stat-tile.is-loading .stat-unit { opacity: 0.5; }
+.stat-tile.is-error { border-color: var(--warn); background: var(--warning-tint); }
+
+.stat-tile .progress {
+  position: absolute;
+  bottom: 0; left: 0;
+  height: 2px;
+  width: 100%;
+  background: var(--line);
+  overflow: hidden;
+}
+.stat-tile .progress::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--brand);
+  box-shadow: 0 0 12px var(--brand-glow);
+  transform: translateX(-100%);
+  animation: progress-slide 1.1s ease-in-out infinite;
+}
+@keyframes progress-slide {
+  0%   { transform: translateX(-100%); }
+  60%  { transform: translateX(40%); }
+  100% { transform: translateX(100%); }
+}
+
+.stat-tile .k {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--mute);
+}
+.stat-tile .v {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  margin-top: 4px;
+}
+.stat-tile .stat-num {
+  font-weight: 700;
+  font-size: 40px;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.stat-tile .stat-unit {
+  font-size: 14px;
+  color: var(--mute);
+  font-weight: 500;
+}
+.stat-tile .threshold {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--mute);
+}
+.stat-tile .footer {
+  margin-top: auto;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--mute);
+}
+
+.stat-tile .err-icon {
+  font-size: 28px;
+  color: var(--warn);
+}
+.stat-tile .err-msg {
+  font-size: 12.5px;
+  color: var(--warn);
+  word-wrap: break-word;
+}

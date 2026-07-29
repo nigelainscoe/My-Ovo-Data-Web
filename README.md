@@ -95,7 +95,9 @@ My-Ovo-Data-Web/
 │   ├── export.py          CSV / Excel builders
 │   ├── config.py          endpoints & constants (was AppSettings.json)
 │   └── resources/graphql/ accounts.query, readings.query
-├── static/                index.html, app.js, style.css
+├── static/                index.html, app.js, style.css, tokens.css, fonts.css
+│   └── fonts/             self-hosted woff2 files (no CDN calls at runtime)
+├── public/                favicon.svg, favicon-48.png (served from the root)
 ├── data/                  SQLite databases (created at runtime)
 ├── requirements.txt
 └── run.sh
@@ -106,3 +108,9 @@ My-Ovo-Data-Web/
 Licensed under the Apache License 2.0 — see [LICENSE](LICENSE).
 
 This project is a Python/web port of [MikeWilliams-UK/My-Ovo-Data](https://github.com/MikeWilliams-UK/My-Ovo-Data) (also Apache 2.0). Not affiliated with or endorsed by OVO Energy.
+
+The bundled webfonts in `static/fonts/` (Space Grotesk, JetBrains Mono,
+Instrument Serif) are third-party software under the SIL Open Font License 1.1 —
+see [static/fonts/OFL.txt](static/fonts/OFL.txt). They're vendored rather than
+loaded from a CDN so the app makes no outbound requests other than to the OVO
+API itself.
